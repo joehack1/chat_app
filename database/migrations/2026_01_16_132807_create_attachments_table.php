@@ -14,9 +14,14 @@ class CreateAttachmentsTable extends Migration
     public function up()
     {
         Schema::create('attachments', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+    $table->id();
+    $table->foreignId('message_id')->constrained()->onDelete('cascade');
+    $table->string('filename');
+    $table->string('path');
+    $table->string('mime_type');
+    $table->integer('size')->nullable();
+    $table->timestamps();
+    });
     }
 
     /**
