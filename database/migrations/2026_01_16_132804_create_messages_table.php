@@ -26,6 +26,14 @@ class CreateMessagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('messages');
+        Schema::create('messages', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('conversation_id')->constrained()->onDelete('cascade');
+    $table->foreignId('user_id')->constrained()->onDelete('cascade');
+    $table->text('body')->nullable();
+    $table->enum('type', ['text', 'image', 'file', 'system'])->default('text');
+    $table->timestamp('read_at')->nullable();
+    $table->timestamps();
+    });
     }
 }

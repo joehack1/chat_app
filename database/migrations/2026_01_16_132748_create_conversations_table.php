@@ -26,6 +26,13 @@ class CreateConversationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('conversations');
+        Schema::create('conversations', function (Blueprint $table) {
+    $table->id();
+    $table->string('name')->nullable();
+    $table->enum('type', ['direct', 'group'])->default('direct');
+    $table->foreignId('created_by')->constrained('users');
+    $table->timestamps();
+    $table->softDeletes();
+  });
     }
 }

@@ -26,6 +26,14 @@ class CreateParticipantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('participants');
+        Schema::create('participants', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('conversation_id')->constrained()->onDelete('cascade');
+    $table->foreignId('user_id')->constrained()->onDelete('cascade');
+    $table->timestamp('last_read_at')->nullable();
+    $table->timestamps();
+    
+    $table->unique(['conversation_id', 'user_id']);
+    });
     }
 }
