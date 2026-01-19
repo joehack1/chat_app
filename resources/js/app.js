@@ -1,23 +1,12 @@
+// resources/js/app.js
 import './bootstrap';
-import '../css/app.css';
+import { createApp } from 'vue';
+import ChatContainer from './Components/Chat/ChatContainer.vue';
 
-import { createApp, h } from 'vue';
-import { createInertiaApp } from '@inertiajs/inertia-vue3';
-import { InertiaProgress } from '@inertiajs/progress';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
+const app = createApp({});
 
-const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
+// Register components
+app.component('ChatContainer', ChatContainer);
 
-createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
-    resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
-    setup({ el, app, props, plugin }) {
-        return createApp({ render: () => h(app, props) })
-            .use(plugin)
-            .use(ZiggyVue, Ziggy)
-            .mount(el);
-    },
-});
-
-InertiaProgress.init({ color: '#4B5563' });
+// Mount the app
+app.mount('#app');
